@@ -7,11 +7,10 @@
 
 unsigned int X_axis[NUM_POINTS];
 unsigned int Y_axis[NUM_POINTS];
-void swap(unsigned int array[], int i, int j);
 unsigned int qselect(unsigned int *v,  unsigned int *y, int n, int k);
 
 void find_quadrants_2 (int num_quadrants, int quadrants, int start, int end) {
-    if(quadrants >= num_quadrants) {
+    if(quadrants == num_quadrants) {
         return;
     } 
     unsigned int x_breaking;
@@ -22,18 +21,10 @@ void find_quadrants_2 (int num_quadrants, int quadrants, int start, int end) {
     int MaxY = Y_axis[start];
     int i;
     for (i = start+1; i < end; i++) {
-        if (X_axis[i] < MinX) {
-            MinX = X_axis[i];
-        }
-        if (X_axis[i] > MaxX) {
-            MaxX = X_axis[i];
-        }
-        if (Y_axis[i] < MinY) {
-            MinY = Y_axis[i];
-        }
-        if (Y_axis[i] > MaxY) {
-            MaxY = Y_axis[i];
-        }
+    	MinX = X_axis[i] < MinX ? X_axis[i] : MinX;
+    	MaxX = X_axis[i] > MaxX ? X_axis[i] : MaxX;
+    	MinY = Y_axis[i] < MinY ? Y_axis[i] : MinY;
+    	MaxY = Y_axis[i] > MaxY ? Y_axis[i] : MaxY;
     }
 
     int X_cut;
@@ -96,12 +87,6 @@ unsigned int qselect(unsigned int *v, unsigned int* w, int len, int k)
             :st > k ? qselect(v, w, st, k)
                 : qselect(v + st, w + st, len - st, k - st);
 }
-void swap(unsigned int array[], int i, int j) {
-    int temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-}
-
 int main(argc,argv)
 int argc;
 char *argv[];
